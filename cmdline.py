@@ -25,10 +25,10 @@ def parse(query_load):
 # Helper function, gets userdata from a username payload
 def userdata(username):
     payload = {"username" : username}
-    data = query("UserInfo", usernd)
+    data = query("UserInfo", payload)
     if(userdata[0] == "300"):
-        ("CreateUser", usernd)[0]
-        data = query("UserInfo", usernd)
+        ("CreateUser", payload)[0]
+        data = query("UserInfo", payload)
     return (int(data[1]), int(userdata[2][:-1]))
 
 
