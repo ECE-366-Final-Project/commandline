@@ -1,5 +1,6 @@
 ##Command line Interface for interacting With Backend
-## Written in Python as ducktyping is clutch a.f
+## Written in Python as ducktyping and requests library streamline
+
 
 ##Prereqs: Install request
 import requests
@@ -20,6 +21,17 @@ def parse(query_load):
         raise Exception("Something went wrong: error from API is %s" % words[1:])
     return words
     #Status code is always first element in word
+
+# Helper function, gets userdata from a username payload
+def userdata(username):
+    payload = {"username" : username}
+    data = query("UserInfo", usernd)
+    if(userdata[0] == "300"):
+        ("CreateUser", usernd)[0]
+        data = query("UserInfo", usernd)
+    return (int(data[1]), int(userdata[2][:-1]))
+
+
 
 
 def play_slots(ID,bet):
@@ -64,18 +76,10 @@ def play_blackjack(ID,initial_bet):
 ## Stores information about the session, such as userID & other relevant user info
 if __name__ == "__main__":
     username = input("Please enter your username: ")
-    usernd = {"username" : username}
-    userdata = query("UserInfo", usernd)
-    if(userdata[0] == "300"):
-        code = query("CreateUser", usernd)[0]
-        userdata = query("UserInfo", usernd)
-    #Get userID, balance here:
-    userid = int(userdata[1])
-    #messy ahh call but it has to be done
+    userid,balance = userdata(username)
     session = True
     while(session):
-        userdata = query("UserInfo", usernd)
-        balance = int(userdata[2][:-1])
+        balance = userdata(username)[1]
         print("You have $%d" % balance)
         print("Would you like to make a deposit?")
         dep = (input().lower() == "y")
@@ -108,14 +112,13 @@ if __name__ == "__main__":
         print("Would you like to make a withdrawal?")
         wth= (input().lower() == "y")
         if wth:
-            userdata = query("UserInfo", usernd)
-            balance = int(userdata[2][:-1])
+            balance = userdata(username)[1]
             wth_amnt = int(input("Enter withdrawal amount: "))
             while(wth_amnt > balance):
                 wth_amnt = int(input("Too much! Your balance is %d. Enter withdrawal amount: " % balance))
-            wth = { "userID": userid,
+            wth_payload = { "userID": userid,
                 "amount": wth_amnt}
-            query("Withdrawal", wth)
+            query("Withdrawal", wth_payload)
 
         print("Would you like to play again?")
         session = (input().lower() == "y")
