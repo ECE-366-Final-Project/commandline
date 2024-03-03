@@ -87,10 +87,8 @@ if __name__ == "__main__":
             dep_amnt = int(input("Enter deposit amount: "))
             dep_payload = { "userID": userid,
                             "amount": dep_amnt}
-            balance = userdata(username)
             query("Deposit", dep_payload)
-            userdata(username)
-            balance = int(userdata[2][:-1])
+            balance = userdata(username)[1]
 
         print("Would you like to play Slots?")
         game = input()
