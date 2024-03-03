@@ -26,8 +26,8 @@ def parse(query_load):
 def userdata(username):
     payload = {"username" : username}
     data = query("UserInfo", payload)
-    if(userdata[0] == "300"):
-        ("CreateUser", payload)[0]
+    if(data[0] == "300"):
+        query("CreateUser", payload)[0]
         data = query("UserInfo", payload)
     return (int(data[1]), int(userdata[2][:-1]))
 
@@ -87,8 +87,9 @@ if __name__ == "__main__":
             dep_amnt = int(input("Enter deposit amount: "))
             dep_payload = { "userID": userid,
                             "amount": dep_amnt}
+            balance = userdata(username)
             query("Deposit", dep_payload)
-            userdata = query("UserInfo", usernd)
+            userdata(username)
             balance = int(userdata[2][:-1])
 
         print("Would you like to play Slots?")
