@@ -65,12 +65,11 @@ def slots():
     payload = {"userID": userID, "bet":bet}
     data = query("PlaySlots", payload)
     if data[0] in ["400", "500"]:
-        print ("ERROR PLAYING SLOTS: " + item+" " for item in data[1:])
+        print ("ERROR PLAYING SLOTS: " + str(data[1:]))
         return -1
     data[3] = data[3][:-1]
     while len(data[3]) < 3:
         data[3] = "0"+data[3]
-    print(data[3])
     rolls = [symbols[int(i)-1] for i in list(data[3])]
     print("YOU ROLLED:", rolls)
     print("YOUR BET PAID OUT $"+data[1])
