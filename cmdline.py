@@ -17,8 +17,14 @@ def query(func,payload):
 def parse(query_load):
     str = query_load.text
     words = str.split(',')
-    if words[0] == "400":
-        raise Exception("Something went wrong: error from API is %s" % words[1:])
+    counter = 0
+    while words[0] == "500":
+        print("Something went wrong: error from API is %s" % words[1:])
+        str = query_load.text
+        words = str.split(',')
+        counter+=1
+        if(counter > 6):
+            raise Exception("Refer to above errors: Calls have not been processed")
     return words
     #Status code is always first element in word
 
@@ -29,6 +35,8 @@ def userdata(username):
     if(data[0] == "300"):
         query("CreateUser", payload)[0]
         data = query("UserInfo", payload)
+    while(data[0] == "400"):
+        username = input("Please enter a valid username: ")
     return (int(data[1]), int(userdata[2][:-1]))
 
 
