@@ -75,6 +75,17 @@ def slots():
     print("YOUR BET PAID OUT $"+data[1])
     return
 
+cowsay = """
+ ______________
+< CooperCasino >
+ --------------
+        \\   ^__^
+         \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||
+"""
+print(cowsay)
 while(True):
     print("Options:\n1. Create Account\n2. Log In\n3. Deposit/Withdraw\n4. Play Slots\n5. Quit")
     match(input("Choice: ")):
